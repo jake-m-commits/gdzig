@@ -60,7 +60,7 @@ pub inline fn fromNullTerminatedUtf8(str: [:0]const u8) StringName {
 
 // @mixin stop
 
-const raw: *Interface = &@import("../gdzig_bindings.zig").raw;
+const raw: *Interface = &@import("../gdzig.zig").raw;
 
 const Interface = @import("../Interface.zig");
 const StringName = @import("./string_name.zig").StringName;

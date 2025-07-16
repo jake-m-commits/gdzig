@@ -326,7 +326,7 @@ test "forType" {
     }
 }
 
-const raw = &@import("../gdzig_bindings.zig").raw;
+const raw = &@import("../gdzig.zig").raw;
 
 const std = @import("std");
 const Atomic = std.atomic.Value;

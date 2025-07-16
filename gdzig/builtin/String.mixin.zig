@@ -297,7 +297,7 @@ pub inline fn indexConst(self: *const String, index_: usize) *const u32 {
 
 // @mixin stop
 
-const raw: *Interface = &@import("../gdzig_bindings.zig").raw;
+const raw: *Interface = &@import("../gdzig.zig").raw;
 
 const std = @import("std");
 
