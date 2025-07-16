@@ -298,8 +298,6 @@ pub fn registerSignal(comptime T: type, comptime S: type) void {
     } else {
         godot.interface.classdbRegisterExtensionClassSignal(godot.interface.library, meta.typeName(T), &StringName.fromLatin1(signal_name), null, 0);
     }
-
-    std.debug.print("Signal registered: {s}\n", .{signal_name});
 }
 
 pub fn init() void {}
