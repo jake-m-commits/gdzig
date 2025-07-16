@@ -20,7 +20,7 @@ pub inline fn assumeFromUtf8(str: []const u8) String {
 /// **Since Godot 4.3**
 pub inline fn fromUtf8(cstr: []const u8) !String {
     var result: String = undefined;
-    const err = raw.stringNewWithUtf8CharsAndLen2(result.ptr(), cstr.ptr, cstr.len);
+    const err = raw.stringNewWithUtf8CharsAndLen2(result.ptr(), cstr.ptr, @intCast(cstr.len));
     if (err != 0) {
         return error.Full;
     }
@@ -45,7 +45,7 @@ pub inline fn fromNullTerminatedUtf8(str: [*:0]const u8) String {
 /// **Since Godot 4.1**
 pub inline fn fromLatin1(cstr: []const u8) String {
     var result: String = undefined;
-    raw.stringNewWithLatin1CharsAndLen(result.ptr(), cstr.ptr, cstr.len);
+    raw.stringNewWithLatin1CharsAndLen(result.ptr(), cstr.ptr, @intCast(cstr.len));
     return result;
 }
 

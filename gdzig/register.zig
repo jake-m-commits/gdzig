@@ -309,6 +309,7 @@ pub fn deinit() void {
 }
 
 const std = @import("std");
+const StringHashMap = std.StringHashMapUnmanaged;
 
 const bindings = @import("gdzig_bindings");
 const String = bindings.builtin.String;
@@ -317,7 +318,6 @@ const Variant = bindings.builtin.Variant;
 const PropertyUsageFlags = bindings.global.PropertyUsageFlags;
 const PropertyHint = bindings.global.PropertyHint;
 const Interface = bindings.Interface;
-const StringHashMap = std.StringHashMapUnmanaged;
 
 const godot = @import("gdzig.zig");
 const c = godot.c;
