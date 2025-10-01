@@ -11,6 +11,7 @@ dir = "example"
 run = "zig build"
 
 [tasks."example:run"]
+depends = ["example:build"]
 dir = "example/project"
 run = "godot"
 

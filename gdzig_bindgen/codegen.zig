@@ -889,8 +889,12 @@ fn writeFunctionHeader(w: *CodeWriter, function: *const Context.Function) !void 
                 try writeTypeAtReturn(w, &function.return_type);
                 if (function.can_init_directly) {
                     try w.writeLine(" = undefined;");
+                } else if (function.return_type_initializer) |initializer| {
+                    try w.printLine(" = {s};", .{initializer});
                 } else {
-                    try w.printLine(" = {s};", .{function.return_type_initializer orelse "undefined"});
+                    try w.writeAll(" = std.mem.zeroes(");
+                    try writeTypeAtReturn(w, &function.return_type);
+                    try w.writeLine(");");
                 }
             }
         }
