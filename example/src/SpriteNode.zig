@@ -8,6 +8,7 @@ const Sprite = struct {
     pos: Vector2,
     vel: Vector2,
     scale: Vector2,
+    size: Vector2,
     gd_sprite: *Sprite2D,
 };
 
@@ -37,15 +38,17 @@ pub fn _ready(self: *Self) void {
 
     for (0..10000) |_| {
         const s: f32 = self.randfRange(f32, 0.1, 0.2);
-        const spr = Sprite{
+        var spr = Sprite{
             .pos = Vector2.initXY(self.randfRange(f32, 0, sz.x), self.randfRange(f32, 0, sz.y)),
             .vel = Vector2.initXY(self.randfRange(f32, -1000, 1000), self.randfRange(f32, -1000, 1000)),
             .scale = Vector2.initXY(s, s),
+            .size = .zero,
             .gd_sprite = Sprite2D.init(),
         };
         spr.gd_sprite.setTexture(Texture2D.downcast(tex).?);
         spr.gd_sprite.setRotation(self.randfRange(f32, 0, std.math.pi));
         spr.gd_sprite.setScale(spr.scale);
+        spr.size = spr.gd_sprite.getRect().size;
         self.base.addChild(.upcast(spr.gd_sprite), .{});
         self.sprites.append(godot.heap.general_allocator, spr) catch |err| {
             std.log.err("Failed to append sprite: {}", .{err});
@@ -62,7 +65,7 @@ pub fn _physicsProcess(self: *Self, delta: f64) void {
 
     for (self.sprites.items) |*spr| {
         const pos = spr.pos.add(spr.vel.mulFloat(@floatCast(delta)));
-        const spr_size = spr.gd_sprite.getRect().size.mul(spr.gd_sprite.getScale());
+        const spr_size = spr.size.mul(spr.scale);
 
         if (pos.x <= spr_size.x / 2) {
             spr.vel.x = @abs(spr.vel.x);
@@ -89,4 +92,5 @@ const ResourceLoader = godot.class.ResourceLoader;
 const Sprite2D = godot.class.Sprite2D;
 const Texture2D = godot.class.Texture2D;
 const Vector2 = godot.builtin.Vector2;
+const Rect2 = godot.builtin.Rect2;
 const String = godot.builtin.String;

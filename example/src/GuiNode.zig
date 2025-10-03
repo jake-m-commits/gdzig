@@ -21,7 +21,9 @@ pub fn _enterTree(self: *Self) void {
     godot.connect(toggle_btn, Button.ToggledSignal, .fromClosure(self, &onToggled));
     godot.connect(normal_btn, Button.PressedSignal, .fromClosure(self, &onPressed));
 
-    const res_name: String = .fromLatin1("res://textures/logo.png");
+    var res_name: String = .fromLatin1("res://textures/logo.png");
+    defer res_name.deinit();
+
     const texture = ResourceLoader.load(res_name, .{}).?;
     defer _ = texture.unreference();
     self.sprite = Sprite2D.init();
@@ -59,5 +61,6 @@ const Engine = godot.class.Engine;
 const ResourceLoader = godot.class.ResourceLoader;
 const Sprite2D = godot.class.Sprite2D;
 const String = godot.builtin.String;
+const StringName = godot.builtin.StringName;
 const Texture2D = godot.class.Texture2D;
 const Vector2 = godot.builtin.Vector2;

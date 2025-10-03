@@ -44,7 +44,9 @@ pub fn _process(self: *ExampleNode, _: f64) void {
 
     var fps_buf: [64]u8 = undefined;
     const fps = std.fmt.bufPrint(&fps_buf, "FPS: {d}", .{Engine.getFramesPerSecond()}) catch @panic("Failed to format FPS");
-    const fps_string = String.fromLatin1(fps);
+    var fps_string = String.fromLatin1(fps);
+    defer fps_string.deinit();
+
     self.fps_counter.setText(fps_string);
 }
 
