@@ -288,9 +288,9 @@ pub fn registerSignal(comptime T: type, comptime S: type) void {
         properties[i].type = @intFromEnum(a.type);
         properties[i].hint = @intCast(@intFromEnum(a.hint));
         properties[i].usage = @bitCast(a.usage);
-        properties[i].name = @ptrCast(@constCast(&a.name));
-        properties[i].class_name = @ptrCast(@constCast(&a.class_name));
-        properties[i].hint_string = @ptrCast(@constCast(&a.hint_string));
+        properties[i].name = if (a.name) |name| @ptrCast(@constCast(name)) else null;
+        properties[i].class_name = if (a.class_name) |class_name| @ptrCast(@constCast(class_name)) else null;
+        properties[i].hint_string = if (a.hint_string) |hint_string| @ptrCast(@constCast(hint_string)) else null;
     }
 
     if (comptime arguments.len > 0) {
